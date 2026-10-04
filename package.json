@@ -1,0 +1,45 @@
+{
+  "name": "@everpod-ai/sdk",
+  "version": "0.1.0",
+  "description": "Official JavaScript SDK for the Everpod API.",
+  "type": "module",
+  "main": "./src/index.js",
+  "types": "./src/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./src/index.d.ts",
+      "default": "./src/index.js"
+    }
+  },
+  "files": [
+    "src",
+    "README.md"
+  ],
+  "scripts": {
+    "test": "node --test test/client.test.js"
+  },
+  "keywords": [
+    "everpod",
+    "ai-agents",
+    "agent-hosting",
+    "openclaw",
+    "mcp",
+    "sdk"
+  ],
+  "author": "Everpod",
+  "license": "MIT",
+  "homepage": "https://everpod.ai/docs/api",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/everpod-ai/sdk-node.git"
+  },
+  "bugs": {
+    "url": "https://github.com/everpod-ai/sdk-node/issues"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}
