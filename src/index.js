@@ -2,7 +2,7 @@
    (https://everpod.ai/docs/api) and nothing else. No dependencies: it uses
    the platform's fetch. */
 
-export const VERSION = "0.1.0";
+export const VERSION = "0.2.0";
 
 const DEFAULT_BASE_URL = "https://everpod.ai";
 
@@ -47,10 +47,12 @@ export class Everpod {
     return (await this.#request("GET", `/pods/${encodeURIComponent(id)}`)).pod;
   }
 
-  /** Start a pod under the name its owner wants for their agent. Nothing is
-      charged: the pod stays unpaid until its owner pays at `pay_url`. */
-  async startPod({ name } = {}) {
-    return (await this.#request("POST", "/pods", { name })).pod;
+  /** Start a pod. `name` is the name its owner wants for their agent; for a
+      developer pod (`kind: "developer"`) it is the machine's name, and
+      `login` is the owner's username on the machine. Nothing is charged: the
+      pod stays unpaid until its owner pays at `pay_url`. */
+  async startPod({ name, kind, login } = {}) {
+    return (await this.#request("POST", "/pods", { name, kind, login })).pod;
   }
 
   async #request(method, path, body) {

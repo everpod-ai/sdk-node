@@ -8,12 +8,13 @@ import { Everpod, EverpodError, VERSION } from "../src/index.js";
 const POD = {
   id: "5f0c1a52-8f1e-4d0b-9a57-3f6f2f7c1e9a",
   name: "Otto",
-  harness: "openclaw",
+  kind: "openclaw",
   status: "awaiting_payment",
   created_at: "2026-10-03T09:12:44.512345+00:00",
   url: null,
   pay_url: "https://everpod.ai/create?pod=5f0c1a52-8f1e-4d0b-9a57-3f6f2f7c1e9a",
   plan: null,
+  machine: null,
   subscription: null,
 };
 
@@ -69,6 +70,12 @@ test("startPod posts the name as JSON and returns the pod", async () => {
   assert.equal(calls[0].init.method, "POST");
   assert.equal(calls[0].init.headers["Content-Type"], "application/json");
   assert.deepEqual(JSON.parse(calls[0].init.body), { name: "Otto" });
+});
+
+test("startPod for a developer pod posts its kind and the owner's login", async () => {
+  const { calls, fetchImpl } = scripted(201, { pod: POD });
+  await client(fetchImpl).startPod({ name: "atlas", kind: "developer", login: "alex" });
+  assert.deepEqual(JSON.parse(calls[0].init.body), { name: "atlas", kind: "developer", login: "alex" });
 });
 
 test("a base URL with a trailing slash is taken as given without it", async () => {

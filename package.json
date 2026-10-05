@@ -1,6 +1,6 @@
 {
   "name": "@everpod-ai/sdk",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Official JavaScript SDK for the Everpod API.",
   "type": "module",
   "main": "./src/index.js",
@@ -23,6 +23,8 @@
     "ai-agents",
     "agent-hosting",
     "openclaw",
+    "developer-pod",
+    "cloud-computer",
     "mcp",
     "sdk"
   ],
