@@ -13,6 +13,11 @@ export type PodStatus =
 /** An OpenClaw pod, or a developer pod. */
 export type PodKind = "openclaw" | "developer";
 
+/** A coding agent a developer pod can come with: Claude Code, Codex, OpenCode, Pi, Hermes or OpenClaw. */
+export type DeveloperAgent = "claude" | "codex" | "opencode" | "pi" | "hermes" | "openclaw";
+/** A developer pod's size: the S, the M or the L (the sizes and prices are on everpod.ai/developer-pod). */
+export type DeveloperSize = "s" | "m" | "l";
+
 /** A developer pod's machine. */
 export interface PodMachine {
   vcpu: number;
@@ -20,6 +25,10 @@ export interface PodMachine {
   disk_gb: number;
   /** The owner's username on the machine. */
   login: string;
+  /** The coding agents that come installed, as the owner chose when starting the pod; Claude Code and Codex when nobody chose. */
+  agents: DeveloperAgent[];
+  /** The size bought: "s", "m" or "l" (its vcpu, ram_gb and disk_gb above are that size's). */
+  size: DeveloperSize;
   /** The machine's name on its owner's Tailscale network. Null until it has joined. */
   hostname: string | null;
   /** Whether its key expiry is switched off there. */
@@ -75,7 +84,9 @@ export declare class Everpod {
   listPods(): Promise<Pod[]>;
   /** One pod by its id. */
   getPod(id: string): Promise<Pod>;
-  /** Start a pod. A developer pod takes `kind: "developer"` and `login`, the owner's username on
-      the machine. Nothing is charged: the pod stays unpaid until its owner pays at `pay_url`. */
-  startPod(input: { name: string; kind?: PodKind; login?: string }): Promise<Pod>;
+  /** Start a pod. A developer pod takes `kind: "developer"`, `login`, the owner's username on
+      the machine, `agents`, which coding agents come installed (Claude Code and Codex when left out), and `size`,
+      "s", "m" or "l" (the S when left out). Nothing is
+      charged: the pod stays unpaid until its owner pays at `pay_url`. */
+  startPod(input: { name: string; kind?: PodKind; login?: string; agents?: DeveloperAgent[]; size?: DeveloperSize }): Promise<Pod>;
 }
